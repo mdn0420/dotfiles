@@ -14,6 +14,7 @@ in
     fd        # fast find
     fzf       # fuzzy finder
     jq        # json on the command line
+    gh        # github cli; extensions still live in ~/.local/share/gh
     lazygit
     neovim
     fnm       # node version manager; the zsh cd-hook needs it on PATH, not just in initContent
