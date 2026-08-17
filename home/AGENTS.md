@@ -13,6 +13,30 @@
 - Apply that same high standard to engineering excellence: lint, test failures, and test flakiness.
   If you see one, even if it is not caused by what you are working on right now, still get it fixed.
 - Before using "dynamic workflows", "ultra code" or any harness feature that immediately spawns a large swarm of subagents, always explain the tradeoffs and ask the user for explicit approval.
+- Always use context7 when I need code generation, setup or configuration steps, or
+library/API documentation. This means you should automatically use the Context7 MCP
+tools to resolve library id and get library docs without me having to explicitly ask.
+
+## superpowers:subagent-driven-development — model assignment
+
+This OVERRIDES the skill's "Model Selection" section. That section tells you to
+scale down by diff size and use the cheapest tier that fits. Ignore it. The table
+below is an assignment, not a ceiling to optimize below.
+
+| Role (by the skill's own dispatch prompt) | Model |
+|---|---|
+| Implementer — `implementer-prompt.md`, 1-2 files with a complete spec | Sonnet |
+| Implementer — anything else | Opus |
+| Fix-loop escalation implementer (rounds 4-5) | Opus |
+| Task review — `task-reviewer-prompt.md` | **Opus**, regardless of diff size |
+| Scoped re-review — `re-review-prompt.md` | **Opus**. "Small fix diff" is not an exception |
+| Final whole-branch review | Fable |
+
+Haiku is never used for any subagent under this skill.
+
+If you are about to pick a cheaper model than this table because the diff looks
+small, mechanical, or low-risk — that is the exact rationalization this override
+exists to block. Cost is my call, not yours.
 
 ## Maintaining this file
 
