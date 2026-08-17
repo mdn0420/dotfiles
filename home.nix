@@ -16,6 +16,7 @@ in
     jq        # json on the command line
     lazygit
     neovim
+    fnm       # node version manager; the zsh cd-hook needs it on PATH, not just in initContent
     # the font everything renders in
     nerd-fonts.hack
   ];
@@ -28,15 +29,20 @@ in
     syntaxHighlighting.enable = true;  # commands turn green when valid
     initContent = ''
       bindkey '^f' autosuggest-accept
+
+      # Switches node on cd when a .nvmrc, .node-version, or package.json says to.
+      eval "$(${pkgs.fnm}/bin/fnm env --use-on-cd --shell zsh)"
     '';
     shellAliases = {
       ".." = "cd ..";
       add = "git add .";
       push = "git push";
       pull = "git pull";
-      m = "git switch main";
-      cc = "claude --dangerously-skip-permissions";
-      co = "codex --full-auto";
+      gs = "git status";
+      claude-personal = "CLAUDE_CONFIG_DIR=~/.claude ${config.home.homeDirectory}/.local/bin/claude";
+      claude-utm = "CLAUDE_CONFIG_DIR=~/.claude-utm ${config.home.homeDirectory}/.local/bin/claude";
+      claude = "echo 'Use specific commands: claude-personal or claude-utm'";
+      subl = "open '/Applications/Sublime Text.app'";
     };
   };
 
@@ -54,14 +60,14 @@ in
   };
 
   # Edit-in-place: the real file stays in my repo, ~/.config just points at it.
-  home.file.".config/wezterm".source =
-    config.lib.file.mkOutOfStoreSymlink "${dotfiles}/home/.config/wezterm";
   home.file.".config/nvim".source =
     config.lib.file.mkOutOfStoreSymlink "${dotfiles}/home/.config/nvim";
   home.file.".config/herdr".source =
     config.lib.file.mkOutOfStoreSymlink "${dotfiles}/home/.config/herdr";
   home.file.".claude/settings.json".source =
     config.lib.file.mkOutOfStoreSymlink "${dotfiles}/home/.claude/settings.json";
+  home.file.".claude/statusline-command.sh".source =
+    config.lib.file.mkOutOfStoreSymlink "${dotfiles}/home/.claude/statusline-command.sh";
 
   # Keep Pi's credential and runtime state local by linking only authored files and directories.
   home.file.".pi/agent/themes".source =
@@ -74,9 +80,5 @@ in
     config.lib.file.mkOutOfStoreSymlink "${dotfiles}/home/.pi/agent/settings.json";
 
   home.file.".claude/CLAUDE.md".source =
-    config.lib.file.mkOutOfStoreSymlink "${dotfiles}/home/AGENTS.md";
-  home.file.".codex/AGENTS.md".source =
-    config.lib.file.mkOutOfStoreSymlink "${dotfiles}/home/AGENTS.md";
-  home.file.".config/opencode/AGENTS.md".source =
     config.lib.file.mkOutOfStoreSymlink "${dotfiles}/home/AGENTS.md";
 }

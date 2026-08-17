@@ -12,6 +12,11 @@
     home = "/Users/${user}";
   };
   system.stateVersion = 6;
+
+  # Fingerprint instead of a password for sudo, incl. `sudo darwin-rebuild switch`.
+  # nix-darwin owns /etc/pam.d/sudo_local, so this survives macOS updates.
+  security.pam.services.sudo_local.touchIdAuth = true;
+
   system.defaults = {
     NSGlobalDomain = {
       AppleInterfaceStyle = "Dark";
@@ -28,18 +33,31 @@
   nix-homebrew = {
     enable = true;
     inherit user;
+    autoMigrate = true;
   };
   homebrew = {
     enable = true;
     onActivation.cleanup = "zap";  # remove anything not listed here
     onActivation.autoUpdate = true;
     onActivation.extraFlags = [ "--force" ];
+    taps = [
+      { name = "heroku/brew"; trusted = true; }
+      { name = "mongodb/brew"; trusted = true; }
+    ];
     brews = [
       "herdr"
+      "tmux"
+      "heroku/brew/heroku"
+      # keeps mongod able to read the existing /opt/homebrew/var/mongodb data
+      "mongodb/brew/mongodb-community"
+      "mongodb/brew/mongodb-database-tools"
+      # powershell moved from a cask to a homebrew-core formula; the old cask
+      # token 404s on the API, which aborts activation.
+      "powershell"
     ];
     casks = [
-      "wezterm"
-      "claude-code"
+      "ghostty"
+      "opensuperwhisper"
     ];
   };
 }

@@ -1,7 +1,157 @@
 {
-  "theme": "dark-ansi",
-  "statusLine": {
-    "type": "command",
-    "command": "input=$(cat); model=$(echo \"$input\" | jq -r '.model.display_name'); used=$(echo \"$input\" | jq -r '.context_window.used_percentage // empty'); if [ -n \"$used\" ]; then printf \"%s | ctx: %.0f%% used\" \"$model\" \"$used\"; else printf \"%s\" \"$model\"; fi"
-  }
+    "env": {
+        "CLAUDE_CODE_DISABLE_AUTO_MEMORY": "1"
+    },
+    "attribution": {
+        "commit": "",
+        "pr": ""
+    },
+    "permissions": {
+        "allow": [
+            "Skill(playwright-cli)",
+            "Skill(playwright-cli:*)",
+            "mcp__plugin_claude-mem_mcp-search__smart_unfold",
+            "Bash(obsidian read *)",
+            "Bash(obsidian files *)",
+            "Bash(obsidian folders *)",
+            "Bash(obsidian folder *)",
+            "Bash(obsidian file *)",
+            "Bash(obsidian search *)",
+            "Bash(obsidian search:context *)",
+            "Bash(obsidian outline *)",
+            "Bash(obsidian links *)",
+            "Bash(obsidian backlinks *)",
+            "Bash(obsidian properties *)",
+            "Bash(obsidian property:read *)",
+            "Bash(obsidian tags *)",
+            "Bash(obsidian tag *)",
+            "Bash(obsidian vault *)",
+            "Bash(obsidian vaults *)",
+            "Bash(obsidian plugins *)",
+            "Bash(obsidian plugins:enabled *)",
+            "Bash(obsidian theme *)",
+            "Bash(obsidian themes *)",
+            "Bash(obsidian recents *)",
+            "Bash(obsidian bookmarks *)",
+            "Bash(obsidian help *)",
+            "Bash(obsidian version *)"
+        ],
+        "deny": [
+            "Read(**/.env)",
+            "Read(**/.env.local)",
+            "Read(**/.env.production)",
+            "Read(**/.env.development)",
+            "Read(**/.env.staging)",
+            "Read(**/*.pem)",
+            "Read(**/*.key)",
+            "Read(**/secrets/**)",
+            "Read(**/credentials/**)",
+            "Read(**/.aws/**)",
+            "Read(**/.ssh/**)",
+            "Read(**/config/database.yml)"
+        ],
+        "defaultMode": "auto"
+    },
+    "hooks": {
+        "PermissionRequest": [
+            {
+                "matcher": "",
+                "hooks": [
+                    {
+                        "type": "command",
+                        "command": "jq -r '.cwd // \"\"' | { read -r d; p=$(basename \"${d:-$PWD}\"); osascript -e 'on run argv' -e 'display notification (item 1 of argv & \" needs your input\") with title \"Claude Code\" sound name \"Morse\"' -e 'end run' \"$p\"; }"
+                    }
+                ]
+            }
+        ],
+        "Stop": [
+            {
+                "matcher": "",
+                "hooks": [
+                    {
+                        "type": "command",
+                        "command": "jq -r '.cwd // \"\"' | { read -r d; p=$(basename \"${d:-$PWD}\"); osascript -e 'on run argv' -e 'display notification (item 1 of argv & \" is ready\") with title \"Claude Code\" sound name \"Submarine\"' -e 'end run' \"$p\"; }"
+                    }
+                ]
+            }
+        ]
+    },
+    "statusLine": {
+        "type": "command",
+        "command": "bash ~/.claude/statusline-command.sh"
+    },
+    "enabledPlugins": {
+        "claude-md-management@claude-plugins-official": true,
+        "skill-creator@claude-plugins-official": true,
+        "superpowers@superpowers-marketplace": true,
+        "n8n-mcp-skills@n8n-mcp-skills": false,
+        "claude-mem@thedotmack": true,
+        "obsidian@obsidian-skills": false
+    },
+    "extraKnownMarketplaces": {
+        "superpowers-marketplace": {
+            "source": {
+                "source": "github",
+                "repo": "obra/superpowers-marketplace"
+            }
+        },
+        "black-forest-labs": {
+            "source": {
+                "source": "github",
+                "repo": "black-forest-labs/skills"
+            }
+        },
+        "n8n-mcp-skills": {
+            "source": {
+                "source": "github",
+                "repo": "czlonkowski/n8n-skills"
+            }
+        },
+        "thedotmack": {
+            "source": {
+                "source": "github",
+                "repo": "thedotmack/claude-mem"
+            }
+        },
+        "obsidian-skills": {
+            "source": {
+                "source": "github",
+                "repo": "kepano/obsidian-skills"
+            }
+        },
+        "knowledge-work-plugins": {
+            "source": {
+                "source": "github",
+                "repo": "anthropics/knowledge-work-plugins"
+            }
+        }
+    },
+    "sandbox": {
+        "network": {
+            "allowedDomains": [
+                "github.com",
+                "*.npmjs.org"
+            ],
+            "allowUnixSockets": [
+                "/Users/mnguyen/.obsidian-cli.sock"
+            ],
+            "allowMachLookup": [
+                "com.apple.trustd.agent"
+            ]
+        },
+        "filesystem": {
+            "allowRead": [
+                "**/.env.example"
+            ]
+        }
+    },
+    "effortLevel": "high",
+    "tui": "fullscreen",
+    "voice": {
+        "enabled": false,
+        "mode": "hold"
+    },
+    "skipWorkflowUsageWarning": true,
+    "agentPushNotifEnabled": true,
+    "voiceEnabled": false
 }
