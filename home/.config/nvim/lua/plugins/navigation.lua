@@ -11,6 +11,9 @@ return {
     opts = {
       picker = {
         enabled = true,
+        layout = {
+          layout = { width = 0.95, height = 0.9 },
+        },
         sources = {
           files = { hidden = true },
           grep = { hidden = true },
