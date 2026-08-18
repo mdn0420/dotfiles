@@ -9,7 +9,14 @@ return {
     priority = 1000,
     lazy = false,
     opts = {
-      picker = { enabled = true },
+      picker = {
+        enabled = true,
+        sources = {
+          files = { hidden = true },
+          grep = { hidden = true },
+          explorer = { hidden = true },
+        },
+      },
       notifier = { enabled = true },
       input = { enabled = true },
     },
