@@ -18,11 +18,17 @@ in
     lazygit
     neovim
     fnm       # node version manager; the zsh cd-hook needs it on PATH, not just in initContent
+    go        # toolchain; nix sets GOROOT, so never set it by hand
     # the font everything renders in
     nerd-fonts.hack
   ];
   fonts.fontconfig.enable = true;
   home.sessionVariables.EDITOR = "nvim";
+
+  # Binaries from `go install` land in $GOPATH/bin (~/go/bin by default).
+  # nix-darwin's /etc/zshenv builds PATH itself and never runs path_helper, so
+  # /etc/paths.d entries are ignored - anything extra has to be declared here.
+  home.sessionPath = [ "${config.home.homeDirectory}/go/bin" ];
 
   programs.zsh = {
     enable = true;
@@ -33,6 +39,10 @@ in
 
       # Switches node on cd when a .nvmrc, .node-version, or package.json says to.
       eval "$(${pkgs.fnm}/bin/fnm env --use-on-cd --shell zsh)"
+
+      # Completed TickTick tasks, scoped to the UTM project. A function, not an
+      # alias, so the project filter lands after any flags I pass.
+      ticktick-utm() { ticktick-completed "$@" --projects 69ccd90f; }
     '';
     shellAliases = {
       ".." = "cd ..";
