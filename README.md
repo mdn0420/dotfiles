@@ -22,6 +22,7 @@ Running the switch builds:
 - Editor (Neovim config with the rose-pine moon theme)
 - Terminal (WezTerm config with the rose-pine moon theme and dimmed unfocused windows)
 - Agent configs (Claude, Codex, opencode all share one AGENTS.md)
+- Remote access (Remote Login on, plus `mosh` and the firewall exception it needs)
 - Optional Pi theme and local extensions, generic UI settings and model overrides, plus two deliberately pinned third-party Pi packages
 
 ## Prerequisites
@@ -178,6 +179,25 @@ The first time you launch `nvim`, it bootstraps [lazy.nvim](https://github.com/f
 That needs network access once; after that it's offline.
 Neovim and WezTerm both use the rose-pine moon theme.
 Neovim keeps italics off and uses a transparent background on macOS, Windows, and WSL so it matches the terminal setup.
+
+## Remote access
+
+The switch turns on Remote Login (`services.openssh.enable`) and installs [mosh](https://mosh.org), so you can reach this Mac with:
+
+```bash
+mosh you@this-mac
+```
+
+mosh opens the session over ssh, then moves the session itself to its own UDP channel, which is what lets it survive sleep, a changed IP, and a flaky link.
+
+Two things about that are macOS-specific and handled in `configuration.nix`:
+
+- The application firewall only lets binaries on its allow-list accept incoming connections, and its "automatically allow signed software" setting does not cover the Nix store, whose binaries are only ad-hoc signed. So an activation script adds `mosh-server` to the list. Without it, a connection completes the ssh handshake and then hangs.
+- That allow-list entry names an exact store path, so it is re-added on every switch and entries left by older mosh builds are swept out.
+
+Nothing here forwards ports. Reaching the Mac across networks is your VPN's or router's job; on a tailnet it already works, and on a plain internet path you would need UDP 60000-61000 forwarded to it.
+
+If a session ever fails with a complaint about the locale, the client is sending a non-UTF-8 `LANG` - `mosh-server` refuses to start without a UTF-8 locale.
 
 ## License
 

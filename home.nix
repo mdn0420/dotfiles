@@ -19,6 +19,7 @@ in
     neovim
     fnm       # node version manager; the zsh cd-hook needs it on PATH, not just in initContent
     go        # toolchain; nix sets GOROOT, so never set it by hand
+    mosh      # ssh that survives roaming and sleep
     # the font everything renders in
     nerd-fonts.hack
   ];
