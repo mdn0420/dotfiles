@@ -13,6 +13,24 @@ workspace_picker = "prefix+w"
 goto             = "prefix+g"
 copy_mode  = "prefix+y"  # herdr's copy-mode entry key; copy-mode's own internal keys (v/space select, y/Enter copy, q/Esc cancel) aren't configurable
 
+[[keys.command]]
+key = "f5"
+type = "shell"
+# Focus the "server" tab in the focused workspace, or create it and start the dev server there.
+# Herdr runs this through a shell, so "~" expands and the arguments split as written.
+# The server command is per-project: the new tab inherits the workspace cwd, so the
+# path is relative and each repo decides what "run the server" means.
+command = "~/.config/herdr/scripts/tab-run.sh server ./.herdr/run-server.sh"
+description = "focus or start the server tab"
+
+[[keys.command]]
+key = "alt+g"
+type = "popup"
+command = "lazygit"
+description = "run lazygit"
+width = "80%"
+height = "80%"
+
 [ui]
 # Agents panel order: explicit choice of "spaces" (grouped by space, the default) over "priority".
 agent_panel_sort = "spaces"
