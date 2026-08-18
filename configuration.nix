@@ -22,7 +22,7 @@
       AppleInterfaceStyle = "Dark";
       KeyRepeat = 2;          # fast key repeat
       InitialKeyRepeat = 15;  # short delay before repeat
-      _HIHideMenuBar = false;  # auto-hide the menu bar
+      _HIHideMenuBar = false;  # keep the menu bar visible on the desktop
       AppleShowAllExtensions = true;
     };
     dock.autohide = true;
