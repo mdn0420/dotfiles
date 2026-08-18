@@ -52,30 +52,6 @@
         ],
         "defaultMode": "auto"
     },
-    "hooks": {
-        "PermissionRequest": [
-            {
-                "matcher": "",
-                "hooks": [
-                    {
-                        "type": "command",
-                        "command": "jq -r '.cwd // \"\"' | { read -r d; p=$(basename \"${d:-$PWD}\"); osascript -e 'on run argv' -e 'display notification (item 1 of argv & \" needs your input\") with title \"Claude Code\" sound name \"Morse\"' -e 'end run' \"$p\"; }"
-                    }
-                ]
-            }
-        ],
-        "Stop": [
-            {
-                "matcher": "",
-                "hooks": [
-                    {
-                        "type": "command",
-                        "command": "jq -r '.cwd // \"\"' | { read -r d; p=$(basename \"${d:-$PWD}\"); osascript -e 'on run argv' -e 'display notification (item 1 of argv & \" is ready\") with title \"Claude Code\" sound name \"Submarine\"' -e 'end run' \"$p\"; }"
-                    }
-                ]
-            }
-        ]
-    },
     "statusLine": {
         "type": "command",
         "command": "bash ~/.claude/statusline-command.sh"
