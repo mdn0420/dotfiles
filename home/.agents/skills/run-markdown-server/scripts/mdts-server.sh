@@ -53,6 +53,22 @@ lan_ip() {
   printf '%s' "$ip"
 }
 
+# Tailscale address, when the tailnet is up. Usually the better one to hand out:
+# it works off-LAN, the address never changes, traffic is encrypted, and only the
+# user's own devices can reach it - whereas the LAN address is readable by whoever
+# else happens to be on that network.
+tailnet_ip() {
+  local cli=""
+  if command -v tailscale >/dev/null 2>&1; then
+    cli=tailscale
+  elif [ -x /Applications/Tailscale.app/Contents/MacOS/Tailscale ]; then
+    cli=/Applications/Tailscale.app/Contents/MacOS/Tailscale
+  else
+    return 0
+  fi
+  "$cli" ip -4 2>/dev/null | head -1
+}
+
 record_path() { printf '%s/%s.server' "$STATE_DIR" "$1"; }
 
 record_get() {
@@ -90,16 +106,20 @@ live_ports() {
 
 report() {
   # report PORT
-  local port="$1" dir ip
+  local port="$1" dir ip ts
   dir=$(record_get "$port" dir)
   ip=$(lan_ip)
+  ts=$(tailnet_ip)
   printf 'serving   %s\n' "$dir"
-  printf 'local     http://localhost:%s\n' "$port"
+  if [ -n "$ts" ]; then
+    printf 'tailnet   http://%s:%s   <- prefer this: reachable off-LAN, your devices only\n' "$ts" "$port"
+  fi
   if [ -n "$ip" ]; then
     printf 'lan       http://%s:%s\n' "$ip" "$port"
   else
     printf 'lan       http://<this-machine-lan-ip>:%s  (could not detect LAN IP)\n' "$port"
   fi
+  printf 'local     http://localhost:%s\n' "$port"
   printf 'log       %s\n' "$(record_get "$port" log)"
   printf 'stop      %s stop %s\n' "$0" "$port"
 }

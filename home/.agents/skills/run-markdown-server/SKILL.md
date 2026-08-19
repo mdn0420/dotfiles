@@ -35,11 +35,14 @@ SKILL_DIR/scripts/mdts-server.sh logs [PORT]
 
 ```
 serving   /Users/me/project/docs
+tailnet   http://100.x.y.z:8521   <- prefer this: reachable off-LAN, your devices only
+lan       http://192.168.x.y:8521
 local     http://localhost:8521
-lan       http://10.57.2.44:8521
 log       /Users/me/.local/state/mdts-server/8521.log
 stop      .../mdts-server.sh stop 8521
 ```
+
+The `tailnet` line only appears when Tailscale is running.
 
 Behaviour worth knowing so you don't re-implement it:
 
@@ -66,12 +69,17 @@ report, or the parent of the single file in question.
 
 ## Reporting back to the user
 
-Give them the LAN URL, not just localhost - that's the whole reason for binding
-0.0.0.0, and it's what they'll paste into a phone. Deep-link to the specific document
-by appending its path relative to the served directory:
+Hand over a routable URL, not localhost - that's the whole reason for binding
+0.0.0.0, and it's what they'll paste into a phone.
+
+**Lead with the tailnet URL when the script prints one.** It reaches the machine from
+anywhere rather than only the current network, the address never changes, the traffic
+is encrypted, and it's readable only by the user's own devices. Offer the LAN URL as
+the fallback for a device that isn't on the tailnet. Deep-link to the specific
+document by appending its path relative to the served directory:
 
 ```
-http://10.57.2.44:8521/architecture/overview.md
+http://100.x.y.z:8521/architecture/overview.md
 ```
 
 Then stop. Don't screenshot it, don't curl it back and summarise it, don't paste the
@@ -97,12 +105,15 @@ to confirm a document is actually served, check the file exists on disk instead.
 ## LAN exposure
 
 Binding 0.0.0.0 makes every Markdown file under the served directory readable by
-anyone on the network. That's the requested behaviour and needs no ceremony on a
-home or office LAN. Do mention it in one line if you're serving something that looks
-sensitive - credentials, private notes, a client's material - or if the machine is on
-a network the user doesn't control, like a cafe or conference wifi. Offer
-`-H localhost` as the alternative in that case (edit the invocation directly; the
-script always binds 0.0.0.0 by design).
+anyone on the network. That needs no ceremony on a home or office LAN, and none at
+all if the user sticks to the tailnet URL - Tailscale only admits their own devices.
+
+The exposure that matters is the LAN address on a network the user doesn't control,
+like cafe or conference wifi, or when the content is sensitive - credentials, private
+notes, a client's material. Say so in one line and point them at the tailnet URL,
+which solves it without changing anything. If Tailscale isn't available there, offer
+`-H localhost` instead (edit the invocation directly; the script always binds 0.0.0.0
+by design).
 
 ## Lifecycle
 
