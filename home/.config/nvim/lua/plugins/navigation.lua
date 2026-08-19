@@ -12,7 +12,20 @@ return {
       picker = {
         enabled = true,
         layout = {
-          layout = { width = 0.95, height = 0.9 },
+          layout = {
+            box = 'horizontal',
+            width = 0,
+            height = 0,
+            backdrop = false,
+            {
+              box = 'vertical',
+              border = true,
+              title = '{title} {live} {flags}',
+              { win = 'input', height = 1, border = 'bottom' },
+              { win = 'list', border = 'none' },
+            },
+            { win = 'preview', title = '{preview}', border = true, width = 0.7 },
+          },
         },
         sources = {
           files = { hidden = true },
@@ -31,4 +44,3 @@ return {
     },
   },
 }
-
