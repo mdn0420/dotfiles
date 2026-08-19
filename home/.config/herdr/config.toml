@@ -6,7 +6,7 @@ focus_pane_down  = "alt+j"
 focus_pane_up    = "alt+k"
 focus_pane_right = "alt+l"
 split_horizontal = "prefix+-"
-split_vertical    = "prefix+|"
+split_vertical    = "prefix+\\"
 new_tab   = "prefix+t"
 close_tab = "prefix+ampersand"
 workspace_picker = "prefix+w"
@@ -14,7 +14,7 @@ goto             = "prefix+g"
 copy_mode  = "prefix+y"  # herdr's copy-mode entry key; copy-mode's own internal keys (v/space select, y/Enter copy, q/Esc cancel) aren't configurable
 
 [[keys.command]]
-key = "f5"
+key = "alt+s"
 type = "shell"
 # Focus the "server" tab in the focused workspace, or create it and start the dev server there.
 # Herdr runs this through a shell, so "~" expands and the arguments split as written.
