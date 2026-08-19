@@ -38,6 +38,21 @@ If you are about to pick a cheaper model than this table because the diff looks
 small, mechanical, or low-risk — that is the exact rationalization this override
 exists to block. Cost is my call, not yours.
 
+## superpowers:brainstorming and superpowers:writing-plans - serve the doc for review
+
+Both skills end by handing me a Markdown file to review, and a path in the terminal is
+a poor way to read a long spec or plan. At each of these two gates, use the
+`run-markdown-server` skill and give me the rendered URL alongside the file path:
+
+- **brainstorming** - at the User Review Gate, once the spec is saved under
+  `docs/superpowers/specs/` and the spec self-review has passed
+- **writing-plans** - when the plan is saved under `docs/superpowers/plans/` and the
+  execution options are presented
+
+Serve `docs/superpowers/` rather than either subdirectory, so one server covers the
+specs and plans for the whole session, and deep-link to the document just written.
+Leave it running; I read these on a second device while you keep working.
+
 ## Maintaining this file
 
 Keep this file for knowledge useful to almost every future agent session in this project.
