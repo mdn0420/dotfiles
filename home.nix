@@ -93,4 +93,12 @@ in
 
   home.file.".claude/CLAUDE.md".source =
     config.lib.file.mkOutOfStoreSymlink "${dotfiles}/home/AGENTS.md";
+
+  # Authored skills live once under ~/.agents/skills, the vendor-neutral location
+  # third-party skill installers already use. Each agent reads its own directory,
+  # so every tool that should see a skill needs its own link to the same source.
+  home.file.".agents/skills/run-markdown-server".source =
+    config.lib.file.mkOutOfStoreSymlink "${dotfiles}/home/.agents/skills/run-markdown-server";
+  home.file.".claude/skills/run-markdown-server".source =
+    config.lib.file.mkOutOfStoreSymlink "${dotfiles}/home/.agents/skills/run-markdown-server";
 }
