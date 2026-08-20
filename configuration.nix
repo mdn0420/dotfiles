@@ -73,6 +73,7 @@
     ];
     brews = [
       "herdr"
+      "mprocs"
       "tmux"
       "heroku/brew/heroku"
       # keeps mongod able to read the existing /opt/homebrew/var/mongodb data
