@@ -69,6 +69,7 @@
     taps = [
       { name = "heroku/brew"; trusted = true; }
       { name = "mongodb/brew"; trusted = true; }
+      { name = "rjyo/moshi"; trusted = true; }
     ];
     brews = [
       "herdr"
@@ -80,6 +81,13 @@
       # powershell moved from a cask to a homebrew-core formula; the old cask
       # token 404s on the API, which aborts activation.
       "powershell"
+      # Moshi's companion daemon: agent hooks, the local gateway on
+      # 127.0.0.1:24543, and the WebSocket to the phone app. It has to be
+      # running to be useful, and upstream wants a restart after every upgrade,
+      # which is exactly what `restart_service = "changed"` does. Pairing is
+      # still manual and one-off: `moshi-hook pair --token <token>` then
+      # `moshi-hook install`; both survive later upgrades.
+      { name = "rjyo/moshi/moshi-hook"; restart_service = "changed"; }
     ];
     casks = [
       "ghostty"
