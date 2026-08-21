@@ -16,6 +16,7 @@ in
     jq        # json on the command line
     gh        # github cli; extensions still live in ~/.local/share/gh
     lazygit
+    git-lfs   # large-file storage; needs a one-off `git lfs install` to register the filters
     neovim
     fnm       # node version manager; the zsh cd-hook needs it on PATH, not just in initContent
     go        # toolchain; nix sets GOROOT, so never set it by hand
