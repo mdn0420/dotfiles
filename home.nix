@@ -83,6 +83,12 @@ in
   home.file.".claude/statusline-command.sh".source =
     config.lib.file.mkOutOfStoreSymlink "${dotfiles}/home/.claude/statusline-command.sh";
 
+  # SessionStart hook: folds claude-mem memories from deleted git worktrees back
+  # onto the parent repo, which the plugin's own `adopt` never does. Linked out of
+  # store so the 0755 bit committed in the repo carries through.
+  home.file.".claude/scripts/claude-mem-reparent-worktrees.sh".source =
+    config.lib.file.mkOutOfStoreSymlink "${dotfiles}/home/.claude/scripts/claude-mem-reparent-worktrees.sh";
+
   # Keep Pi's credential and runtime state local by linking only authored files and directories.
   home.file.".pi/agent/themes".source =
     config.lib.file.mkOutOfStoreSymlink "${dotfiles}/home/.pi/agent/themes";

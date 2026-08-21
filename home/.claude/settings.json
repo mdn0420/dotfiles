@@ -130,6 +130,17 @@
             "type": "command"
           }
         ]
+      },
+      {
+        "matcher": "startup|clear|compact",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "\"$HOME/.claude/scripts/claude-mem-reparent-worktrees.sh\"",
+            "timeout": 30,
+            "statusMessage": "Reclaiming worktree memories..."
+          }
+        ]
       }
     ],
     "Stop": [
