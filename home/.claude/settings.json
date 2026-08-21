@@ -1,133 +1,235 @@
 {
-    "env": {
-        "CLAUDE_CODE_DISABLE_AUTO_MEMORY": "1"
+  "agentPushNotifEnabled": true,
+  "attribution": {
+    "commit": "",
+    "pr": ""
+  },
+  "effortLevel": "high",
+  "enabledPlugins": {
+    "claude-md-management@claude-plugins-official": true,
+    "claude-mem@thedotmack": true,
+    "n8n-mcp-skills@n8n-mcp-skills": false,
+    "obsidian@obsidian-skills": false,
+    "skill-creator@claude-plugins-official": true,
+    "superpowers@superpowers-marketplace": true
+  },
+  "env": {
+    "CLAUDE_CODE_DISABLE_AUTO_MEMORY": "1"
+  },
+  "extraKnownMarketplaces": {
+    "black-forest-labs": {
+      "source": {
+        "repo": "black-forest-labs/skills",
+        "source": "github"
+      }
     },
-    "attribution": {
-        "commit": "",
-        "pr": ""
+    "knowledge-work-plugins": {
+      "source": {
+        "repo": "anthropics/knowledge-work-plugins",
+        "source": "github"
+      }
     },
-    "permissions": {
-        "allow": [
-            "Skill(playwright-cli)",
-            "Skill(playwright-cli:*)",
-            "mcp__plugin_claude-mem_mcp-search__smart_unfold",
-            "Bash(obsidian read *)",
-            "Bash(obsidian files *)",
-            "Bash(obsidian folders *)",
-            "Bash(obsidian folder *)",
-            "Bash(obsidian file *)",
-            "Bash(obsidian search *)",
-            "Bash(obsidian search:context *)",
-            "Bash(obsidian outline *)",
-            "Bash(obsidian links *)",
-            "Bash(obsidian backlinks *)",
-            "Bash(obsidian properties *)",
-            "Bash(obsidian property:read *)",
-            "Bash(obsidian tags *)",
-            "Bash(obsidian tag *)",
-            "Bash(obsidian vault *)",
-            "Bash(obsidian vaults *)",
-            "Bash(obsidian plugins *)",
-            "Bash(obsidian plugins:enabled *)",
-            "Bash(obsidian theme *)",
-            "Bash(obsidian themes *)",
-            "Bash(obsidian recents *)",
-            "Bash(obsidian bookmarks *)",
-            "Bash(obsidian help *)",
-            "Bash(obsidian version *)"
+    "n8n-mcp-skills": {
+      "source": {
+        "repo": "czlonkowski/n8n-skills",
+        "source": "github"
+      }
+    },
+    "obsidian-skills": {
+      "source": {
+        "repo": "kepano/obsidian-skills",
+        "source": "github"
+      }
+    },
+    "superpowers-marketplace": {
+      "source": {
+        "repo": "obra/superpowers-marketplace",
+        "source": "github"
+      }
+    },
+    "thedotmack": {
+      "source": {
+        "repo": "thedotmack/claude-mem",
+        "source": "github"
+      }
+    }
+  },
+  "hooks": {
+    "PermissionRequest": [
+      {
+        "hooks": [
+          {
+            "async": false,
+            "command": "'/opt/homebrew/bin/moshi-hook' claude-hook",
+            "type": "command"
+          }
+        ]
+      }
+    ],
+    "PostToolUse": [
+      {
+        "hooks": [
+          {
+            "async": true,
+            "command": "'/opt/homebrew/bin/moshi-hook' claude-hook",
+            "type": "command"
+          }
         ],
-        "deny": [
-            "Read(**/.env)",
-            "Read(**/.env.local)",
-            "Read(**/.env.production)",
-            "Read(**/.env.development)",
-            "Read(**/.env.staging)",
-            "Read(**/*.pem)",
-            "Read(**/*.key)",
-            "Read(**/secrets/**)",
-            "Read(**/credentials/**)",
-            "Read(**/.aws/**)",
-            "Read(**/.ssh/**)",
-            "Read(**/config/database.yml)"
+        "matcher": "AskUserQuestion"
+      },
+      {
+        "hooks": [
+          {
+            "async": true,
+            "command": "'/opt/homebrew/bin/moshi-hook' claude-hook",
+            "type": "command"
+          }
         ],
-        "defaultMode": "auto"
+        "matcher": "ExitPlanMode"
+      }
+    ],
+    "PreToolUse": [
+      {
+        "hooks": [
+          {
+            "async": true,
+            "command": "'/opt/homebrew/bin/moshi-hook' claude-hook",
+            "type": "command"
+          }
+        ],
+        "matcher": "AskUserQuestion"
+      },
+      {
+        "hooks": [
+          {
+            "async": true,
+            "command": "'/opt/homebrew/bin/moshi-hook' claude-hook",
+            "type": "command"
+          }
+        ],
+        "matcher": "ExitPlanMode"
+      }
+    ],
+    "SessionEnd": [
+      {
+        "hooks": [
+          {
+            "async": true,
+            "command": "'/opt/homebrew/bin/moshi-hook' claude-hook",
+            "type": "command"
+          }
+        ]
+      }
+    ],
+    "SessionStart": [
+      {
+        "hooks": [
+          {
+            "async": true,
+            "command": "'/opt/homebrew/bin/moshi-hook' claude-hook",
+            "type": "command"
+          }
+        ]
+      }
+    ],
+    "Stop": [
+      {
+        "hooks": [
+          {
+            "async": true,
+            "command": "'/opt/homebrew/bin/moshi-hook' claude-hook",
+            "type": "command"
+          }
+        ]
+      }
+    ],
+    "UserPromptSubmit": [
+      {
+        "hooks": [
+          {
+            "async": true,
+            "command": "'/opt/homebrew/bin/moshi-hook' claude-hook",
+            "type": "command"
+          }
+        ]
+      }
+    ]
+  },
+  "permissions": {
+    "allow": [
+      "Skill(playwright-cli)",
+      "Skill(playwright-cli:*)",
+      "mcp__plugin_claude-mem_mcp-search__smart_unfold",
+      "Bash(obsidian read *)",
+      "Bash(obsidian files *)",
+      "Bash(obsidian folders *)",
+      "Bash(obsidian folder *)",
+      "Bash(obsidian file *)",
+      "Bash(obsidian search *)",
+      "Bash(obsidian search:context *)",
+      "Bash(obsidian outline *)",
+      "Bash(obsidian links *)",
+      "Bash(obsidian backlinks *)",
+      "Bash(obsidian properties *)",
+      "Bash(obsidian property:read *)",
+      "Bash(obsidian tags *)",
+      "Bash(obsidian tag *)",
+      "Bash(obsidian vault *)",
+      "Bash(obsidian vaults *)",
+      "Bash(obsidian plugins *)",
+      "Bash(obsidian plugins:enabled *)",
+      "Bash(obsidian theme *)",
+      "Bash(obsidian themes *)",
+      "Bash(obsidian recents *)",
+      "Bash(obsidian bookmarks *)",
+      "Bash(obsidian help *)",
+      "Bash(obsidian version *)"
+    ],
+    "defaultMode": "auto",
+    "deny": [
+      "Read(**/.env)",
+      "Read(**/.env.local)",
+      "Read(**/.env.production)",
+      "Read(**/.env.development)",
+      "Read(**/.env.staging)",
+      "Read(**/*.pem)",
+      "Read(**/*.key)",
+      "Read(**/secrets/**)",
+      "Read(**/credentials/**)",
+      "Read(**/.aws/**)",
+      "Read(**/.ssh/**)",
+      "Read(**/config/database.yml)"
+    ]
+  },
+  "remoteControlAtStartup": false,
+  "sandbox": {
+    "filesystem": {
+      "allowRead": [
+        "**/.env.example"
+      ]
     },
-    "statusLine": {
-        "type": "command",
-        "command": "bash ~/.claude/statusline-command.sh"
-    },
-    "enabledPlugins": {
-        "claude-md-management@claude-plugins-official": true,
-        "skill-creator@claude-plugins-official": true,
-        "superpowers@superpowers-marketplace": true,
-        "n8n-mcp-skills@n8n-mcp-skills": false,
-        "claude-mem@thedotmack": true,
-        "obsidian@obsidian-skills": false
-    },
-    "extraKnownMarketplaces": {
-        "superpowers-marketplace": {
-            "source": {
-                "source": "github",
-                "repo": "obra/superpowers-marketplace"
-            }
-        },
-        "black-forest-labs": {
-            "source": {
-                "source": "github",
-                "repo": "black-forest-labs/skills"
-            }
-        },
-        "n8n-mcp-skills": {
-            "source": {
-                "source": "github",
-                "repo": "czlonkowski/n8n-skills"
-            }
-        },
-        "thedotmack": {
-            "source": {
-                "source": "github",
-                "repo": "thedotmack/claude-mem"
-            }
-        },
-        "obsidian-skills": {
-            "source": {
-                "source": "github",
-                "repo": "kepano/obsidian-skills"
-            }
-        },
-        "knowledge-work-plugins": {
-            "source": {
-                "source": "github",
-                "repo": "anthropics/knowledge-work-plugins"
-            }
-        }
-    },
-    "sandbox": {
-        "network": {
-            "allowedDomains": [
-                "github.com",
-                "*.npmjs.org"
-            ],
-            "allowUnixSockets": [
-                "/Users/mnguyen/.obsidian-cli.sock"
-            ],
-            "allowMachLookup": [
-                "com.apple.trustd.agent"
-            ]
-        },
-        "filesystem": {
-            "allowRead": [
-                "**/.env.example"
-            ]
-        }
-    },
-    "effortLevel": "high",
-    "tui": "fullscreen",
-    "voice": {
-        "enabled": false,
-        "mode": "hold"
-    },
-    "skipWorkflowUsageWarning": true,
-    "agentPushNotifEnabled": true,
-    "voiceEnabled": false
+    "network": {
+      "allowMachLookup": [
+        "com.apple.trustd.agent"
+      ],
+      "allowUnixSockets": [
+        "/Users/mnguyen/.obsidian-cli.sock"
+      ],
+      "allowedDomains": [
+        "github.com",
+        "*.npmjs.org"
+      ]
+    }
+  },
+  "skipWorkflowUsageWarning": true,
+  "statusLine": {
+    "command": "bash ~/.claude/statusline-command.sh",
+    "type": "command"
+  },
+  "tui": "fullscreen",
+  "voice": {
+    "enabled": false,
+    "mode": "hold"
+  },
+  "voiceEnabled": false
 }
