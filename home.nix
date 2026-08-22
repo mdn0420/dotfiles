@@ -109,4 +109,8 @@ in
     config.lib.file.mkOutOfStoreSymlink "${dotfiles}/home/.agents/skills/run-markdown-server";
   home.file.".claude/skills/run-markdown-server".source =
     config.lib.file.mkOutOfStoreSymlink "${dotfiles}/home/.agents/skills/run-markdown-server";
+  home.file.".agents/skills/using-agent-events".source =
+    config.lib.file.mkOutOfStoreSymlink "${dotfiles}/home/.agents/skills/using-agent-events";
+  home.file.".claude/skills/using-agent-events".source =
+    config.lib.file.mkOutOfStoreSymlink "${dotfiles}/home/.agents/skills/using-agent-events";
 }
