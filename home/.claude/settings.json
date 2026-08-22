@@ -1,170 +1,10 @@
 {
-  "agentPushNotifEnabled": true,
-  "attribution": {
-    "commit": "",
-    "pr": ""
-  },
-  "effortLevel": "high",
-  "enabledPlugins": {
-    "claude-md-management@claude-plugins-official": true,
-    "claude-mem@thedotmack": true,
-    "n8n-mcp-skills@n8n-mcp-skills": false,
-    "obsidian@obsidian-skills": false,
-    "skill-creator@claude-plugins-official": true,
-    "superpowers@superpowers-marketplace": true
-  },
   "env": {
     "CLAUDE_CODE_DISABLE_AUTO_MEMORY": "1"
   },
-  "extraKnownMarketplaces": {
-    "black-forest-labs": {
-      "source": {
-        "repo": "black-forest-labs/skills",
-        "source": "github"
-      }
-    },
-    "knowledge-work-plugins": {
-      "source": {
-        "repo": "anthropics/knowledge-work-plugins",
-        "source": "github"
-      }
-    },
-    "n8n-mcp-skills": {
-      "source": {
-        "repo": "czlonkowski/n8n-skills",
-        "source": "github"
-      }
-    },
-    "obsidian-skills": {
-      "source": {
-        "repo": "kepano/obsidian-skills",
-        "source": "github"
-      }
-    },
-    "superpowers-marketplace": {
-      "source": {
-        "repo": "obra/superpowers-marketplace",
-        "source": "github"
-      }
-    },
-    "thedotmack": {
-      "source": {
-        "repo": "thedotmack/claude-mem",
-        "source": "github"
-      }
-    }
-  },
-  "hooks": {
-    "PermissionRequest": [
-      {
-        "hooks": [
-          {
-            "async": false,
-            "command": "'/opt/homebrew/bin/moshi-hook' claude-hook",
-            "type": "command"
-          }
-        ]
-      }
-    ],
-    "PostToolUse": [
-      {
-        "hooks": [
-          {
-            "async": true,
-            "command": "'/opt/homebrew/bin/moshi-hook' claude-hook",
-            "type": "command"
-          }
-        ],
-        "matcher": "AskUserQuestion"
-      },
-      {
-        "hooks": [
-          {
-            "async": true,
-            "command": "'/opt/homebrew/bin/moshi-hook' claude-hook",
-            "type": "command"
-          }
-        ],
-        "matcher": "ExitPlanMode"
-      }
-    ],
-    "PreToolUse": [
-      {
-        "hooks": [
-          {
-            "async": true,
-            "command": "'/opt/homebrew/bin/moshi-hook' claude-hook",
-            "type": "command"
-          }
-        ],
-        "matcher": "AskUserQuestion"
-      },
-      {
-        "hooks": [
-          {
-            "async": true,
-            "command": "'/opt/homebrew/bin/moshi-hook' claude-hook",
-            "type": "command"
-          }
-        ],
-        "matcher": "ExitPlanMode"
-      }
-    ],
-    "SessionEnd": [
-      {
-        "hooks": [
-          {
-            "async": true,
-            "command": "'/opt/homebrew/bin/moshi-hook' claude-hook",
-            "type": "command"
-          }
-        ]
-      }
-    ],
-    "SessionStart": [
-      {
-        "hooks": [
-          {
-            "async": true,
-            "command": "'/opt/homebrew/bin/moshi-hook' claude-hook",
-            "type": "command"
-          }
-        ]
-      },
-      {
-        "matcher": "startup|clear|compact",
-        "hooks": [
-          {
-            "type": "command",
-            "command": "\"$HOME/.claude/scripts/claude-mem-reparent-worktrees.sh\"",
-            "timeout": 30,
-            "statusMessage": "Reclaiming worktree memories..."
-          }
-        ]
-      }
-    ],
-    "Stop": [
-      {
-        "hooks": [
-          {
-            "async": true,
-            "command": "'/opt/homebrew/bin/moshi-hook' claude-hook",
-            "type": "command"
-          }
-        ]
-      }
-    ],
-    "UserPromptSubmit": [
-      {
-        "hooks": [
-          {
-            "async": true,
-            "command": "'/opt/homebrew/bin/moshi-hook' claude-hook",
-            "type": "command"
-          }
-        ]
-      }
-    ]
+  "attribution": {
+    "commit": "",
+    "pr": ""
   },
   "permissions": {
     "allow": [
@@ -196,7 +36,6 @@
       "Bash(obsidian help *)",
       "Bash(obsidian version *)"
     ],
-    "defaultMode": "auto",
     "deny": [
       "Read(**/.env)",
       "Read(**/.env.local)",
@@ -210,37 +49,198 @@
       "Read(**/.aws/**)",
       "Read(**/.ssh/**)",
       "Read(**/config/database.yml)"
+    ],
+    "defaultMode": "auto"
+  },
+  "hooks": {
+    "PermissionRequest": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "'/opt/homebrew/bin/moshi-hook' claude-hook",
+            "async": false
+          }
+        ]
+      }
+    ],
+    "PostToolUse": [
+      {
+        "matcher": "AskUserQuestion",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "'/opt/homebrew/bin/moshi-hook' claude-hook",
+            "async": true
+          }
+        ]
+      },
+      {
+        "matcher": "ExitPlanMode",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "'/opt/homebrew/bin/moshi-hook' claude-hook",
+            "async": true
+          }
+        ]
+      }
+    ],
+    "PreToolUse": [
+      {
+        "matcher": "AskUserQuestion",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "'/opt/homebrew/bin/moshi-hook' claude-hook",
+            "async": true
+          }
+        ]
+      },
+      {
+        "matcher": "ExitPlanMode",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "'/opt/homebrew/bin/moshi-hook' claude-hook",
+            "async": true
+          }
+        ]
+      }
+    ],
+    "SessionEnd": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "'/opt/homebrew/bin/moshi-hook' claude-hook",
+            "async": true
+          }
+        ]
+      }
+    ],
+    "SessionStart": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "'/opt/homebrew/bin/moshi-hook' claude-hook",
+            "async": true
+          }
+        ]
+      },
+      {
+        "matcher": "startup|clear|compact",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "\"$HOME/.claude/scripts/claude-mem-reparent-worktrees.sh\"",
+            "timeout": 30,
+            "statusMessage": "Reclaiming worktree memories..."
+          }
+        ]
+      }
+    ],
+    "Stop": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "'/opt/homebrew/bin/moshi-hook' claude-hook",
+            "async": true
+          }
+        ]
+      }
+    ],
+    "UserPromptSubmit": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "'/opt/homebrew/bin/moshi-hook' claude-hook",
+            "async": true
+          }
+        ]
+      }
     ]
   },
-  "remoteControlAtStartup": false,
-  "sandbox": {
-    "filesystem": {
-      "allowRead": [
-        "**/.env.example"
-      ]
+  "statusLine": {
+    "type": "command",
+    "command": "bash ~/.claude/statusline-command.sh"
+  },
+  "enabledPlugins": {
+    "claude-md-management@claude-plugins-official": true,
+    "claude-mem@thedotmack": true,
+    "n8n-mcp-skills@n8n-mcp-skills": false,
+    "obsidian@obsidian-skills": false,
+    "skill-creator@claude-plugins-official": true,
+    "superpowers@superpowers-marketplace": true
+  },
+  "extraKnownMarketplaces": {
+    "black-forest-labs": {
+      "source": {
+        "source": "github",
+        "repo": "black-forest-labs/skills"
+      }
     },
+    "knowledge-work-plugins": {
+      "source": {
+        "source": "github",
+        "repo": "anthropics/knowledge-work-plugins"
+      }
+    },
+    "n8n-mcp-skills": {
+      "source": {
+        "source": "github",
+        "repo": "czlonkowski/n8n-skills"
+      }
+    },
+    "obsidian-skills": {
+      "source": {
+        "source": "github",
+        "repo": "kepano/obsidian-skills"
+      }
+    },
+    "superpowers-marketplace": {
+      "source": {
+        "source": "github",
+        "repo": "obra/superpowers-marketplace"
+      }
+    },
+    "thedotmack": {
+      "source": {
+        "source": "github",
+        "repo": "thedotmack/claude-mem"
+      }
+    }
+  },
+  "sandbox": {
     "network": {
-      "allowMachLookup": [
-        "com.apple.trustd.agent"
+      "allowedDomains": [
+        "github.com",
+        "*.npmjs.org"
       ],
       "allowUnixSockets": [
         "/Users/mnguyen/.obsidian-cli.sock"
       ],
-      "allowedDomains": [
-        "github.com",
-        "*.npmjs.org"
+      "allowMachLookup": [
+        "com.apple.trustd.agent"
+      ]
+    },
+    "filesystem": {
+      "allowRead": [
+        "**/.env.example"
       ]
     }
   },
-  "skipWorkflowUsageWarning": true,
-  "statusLine": {
-    "command": "bash ~/.claude/statusline-command.sh",
-    "type": "command"
-  },
-  "tui": "fullscreen",
+  "effortLevel": "high",
+  "tui": "default",
   "voice": {
     "enabled": false,
     "mode": "hold"
   },
+  "skipWorkflowUsageWarning": true,
+  "remoteControlAtStartup": false,
+  "agentPushNotifEnabled": true,
   "voiceEnabled": false
 }
